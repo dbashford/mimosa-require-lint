@@ -14,6 +14,8 @@ Add `'require-lint'` to your list of modules.  That's all!  Mimosa will install 
 
 ### Unused Dependencies
 
+#### Vanilla AMD
+
 ```javascript
 define(['backbone','underscore'], function(Backbone, _) {
   var view = new Backbone.View()
@@ -26,7 +28,24 @@ For the above totally worthless piece of code, this module will provide the foll
 Dependency [[ underscore ]] declared but not used in [[ /path/to/lame/file.js ]]
 ```
 
-Note: This module currently only works with classic AMD syntax and will not work with CommonJS wrapped modules.
+#### CommonJS Wrapper
+
+It will also work for the AMD CommonJS wrapper
+
+```javascript
+define(function(require, exports, module){
+    var Backbone = require('backbone'),
+    var _ = require('underscore');
+
+    var view = new Backbone.View()
+    module.exports = view;
+});
+```
+
+And the warning:
+```
+Dependency [[ underscore ]] declared but not used in [[ /path/to/lame/file.js ]]
+```
 
 ## Default Config
 
