@@ -1,9 +1,12 @@
 "use strict"
 
 esprima = require 'esprima'
-logger = require 'logmimosa'
+
+logger = null
 
 registration = (mimosaConfig, register) ->
+  logger = mimosaConfig.log
+
   register ['add','update','buildFile'], 'betweenCompileWrite', _run, mimosaConfig.extensions.javascript
 
 _run = (mimosaConfig, options, next) ->
