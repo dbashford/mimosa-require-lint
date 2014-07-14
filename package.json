@@ -1,6 +1,6 @@
 {
   "name": "mimosa-require-lint",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "homepage": "https://github.com/dbashford/mimosa-require-lint",
   "author": "David Bashford",
   "description": "A RequireJS/AMD linting module",
@@ -21,7 +21,7 @@
     "amd"
   ],
   "dependencies": {
-    "esprima": "1.0.4"
+    "esprima": "1.2.2"
   },
   "license": "MIT",
   "engines": {
