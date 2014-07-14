@@ -2,6 +2,8 @@
 
 esprima = require 'esprima'
 
+config = require "./config"
+
 logger = null
 
 registration = (mimosaConfig, register) ->
@@ -11,18 +13,26 @@ registration = (mimosaConfig, register) ->
 
 _run = (mimosaConfig, options, next) ->
   for file in options.files
-    try
-      ast = esprima.parse file.outputFileText
-    catch err
-      logger.error "require-lint failed to parse JavaScript file [[ #{file.inputFileName} ]]", err
+    if __isntExcluded file.inputFileText, mimosaConfig.requireLint
+      try
+        ast = esprima.parse file.outputFileText
+      catch err
+        logger.error "require-lint failed to parse JavaScript file [[ #{file.inputFileName} ]]", err
 
-    if ast
-      __checkUsedDependencies file.inputFileName, ast
+      if ast
+        __checkUsedDependencies file.inputFileName, ast
 
   next()
 
+__isntExcluded = (fileName, rl) ->
+  if rl.exclude and rl.exclude.indexOf(fileName) isnt -1
+    return false
+  if rl.excludeRegex and fileName.match rl.excludeRegex
+    return false
+  true
+
 __isDefineCall = (n) ->
-  n.type is 'CallExpression' and n.callee.type is 'Identifier' and n.callee.name is 'define'
+  n and n.type is 'CallExpression' and n.callee.type is 'Identifier' and n.callee.name is 'define'
 
 __checkUsedDependencies = (inputFileName, syntax) ->
   __traverse syntax, __isDefineCall, (node) ->
@@ -98,3 +108,6 @@ __isObjectNotNull = (o) ->
 
 module.exports =
   registration: registration
+  defaults: config.defaults
+  placeholder: config.placeholder
+  validate: config.validate

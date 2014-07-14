@@ -1,5 +1,5 @@
 exports.config =
-  modules: ["jshint", "coffeescript"]
+  modules: ["jshint", "coffeescript", "copy"]
   coffeescript:
     options:
       sourceMap: false

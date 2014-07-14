@@ -49,4 +49,10 @@ Dependency [[ underscore ]] declared but not used in [[ /path/to/lame/file.js ]]
 
 ## Default Config
 
-This module currently has no config.
+```javascript
+requireLint: {
+  exclude:[]
+}
+```
+
+* `exclude`: array of strings or regexes that match files to not jshint, strings are paths that can be relative to the watch.sourceDir or absolute.
